@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     boolean isWinnerDecided;
     ImageView winningLines[] = new ImageView[16];
 
+
+
     public void fillBoard(String move){
         int moveIndex = (move.charAt(move.length()-1)-1-48);
         Log.i("position","position: "+ moveIndex);
@@ -149,9 +151,11 @@ public class MainActivity extends AppCompatActivity {
         ImageView resetButton = findViewById(R.id.restartButton);
         //gameGrid.animate().alpha(0);
         //resetButton.animate().alpha(0);
+
         ImageView logo = findViewById(R.id.gameLogo);
-        logo.animate().rotation(1080).setDuration(1000).alphaBy(-1F);
-        gameGrid.animate().alpha(1).setDuration(3000);
+        logo.animate().rotation(1080).setDuration(1000).translationYBy(-800).scaleY(0.7f).scaleX(0.7f);
+        gameGrid.animate().alpha(1).setDuration(1500);
+        resetButton.animate().alpha(1).setDuration(3000);
         isWinnerDecided = false;
         winningLines[0] = findViewById(R.id.diagonalBlue);
         winningLines[1] = findViewById(R.id.diagonalOppositeBlue);
