@@ -16,6 +16,7 @@
         android:layout_marginTop="190dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="190dp"
+        android:alpha="0"
         android:background="@drawable/board"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -127,6 +128,7 @@
         android:layout_width="102dp"
         android:layout_height="109dp"
         android:layout_marginTop="10dp"
+        android:alpha="0"
         android:onClick="resetGame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -378,9 +380,10 @@
         app:srcCompat="@drawable/horizontalblue" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/gameLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -147,8 +147,11 @@ public class MainActivity extends AppCompatActivity {
         winningIndex3 = -1;
         TableLayout gameGrid = findViewById(R.id.gameGrid);
         ImageView resetButton = findViewById(R.id.restartButton);
-        gameGrid.animate().alpha(0);
-        resetButton.animate().alpha(0);
+        //gameGrid.animate().alpha(0);
+        //resetButton.animate().alpha(0);
+        ImageView logo = findViewById(R.id.gameLogo);
+        logo.animate().rotation(1080).setDuration(1000).alphaBy(-1F);
+        gameGrid.animate().alpha(1).setDuration(3000);
         isWinnerDecided = false;
         winningLines[0] = findViewById(R.id.diagonalBlue);
         winningLines[1] = findViewById(R.id.diagonalOppositeBlue);
