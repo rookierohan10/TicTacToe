@@ -124,6 +124,20 @@
 
 
     <ImageView
+        android:id="@+id/homeButton"
+        android:layout_width="102dp"
+        android:layout_height="109dp"
+        android:layout_marginTop="10dp"
+        android:alpha="1"
+        android:clickable="false"
+        android:onClick="homeButtonAction"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lowerLineBlue"
+        app:srcCompat="@drawable/homebutton" />
+
+    <ImageView
         android:id="@+id/playButton"
         android:layout_width="102dp"
         android:layout_height="109dp"
@@ -135,19 +149,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lowerLineBlue"
         app:srcCompat="@drawable/playbutton" />
-
-    <ImageView
-        android:id="@+id/homeButton"
-        android:layout_width="102dp"
-        android:layout_height="109dp"
-        android:layout_marginTop="10dp"
-        android:alpha="0"
-        android:clickable="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lowerLineBlue"
-        app:srcCompat="@drawable/homebutton" />
 
     <ImageView
         android:id="@+id/upperLineBlue"

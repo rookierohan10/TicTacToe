@@ -19,6 +19,15 @@ public class MainActivity extends AppCompatActivity {
     ImageView winningLines[] = new ImageView[16];
 
 
+    public void setTilesInactive(){
+        boolean flag=playRestartFlag;
+        for( int i=1;i<=9;i++ ){
+            String buttonName = "boardTile"+(i);
+            int id = getResources().getIdentifier(buttonName,"id",getPackageName());
+            findViewById(id).setClickable(flag);
+        }
+    }
+
 
     public void fillBoard(String move){
         int moveIndex = (move.charAt(move.length()-1)-1-48);
@@ -98,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
                 //Log.i("ids: tile"+i,Integer.toString(id));
             }
             if(turn == 'X')
-                winningLines[lineNumber].animate().alpha(1).setDuration(250);
+                winningLines[lineNumber].animate().alpha(1);
             else
-                winningLines[8+lineNumber].animate().alpha(1).setDuration(250);
+                winningLines[8+lineNumber].animate().alpha(1);
         }
 
     }
@@ -127,27 +136,43 @@ public class MainActivity extends AppCompatActivity {
         if(playRestartFlag == false){
             playRestartFlag=true;
             playButtonAction();
+            setTilesInactive();
         }
         else{
             resetGame();
         }
     }
 
+    public void homeButtonAction(View view){
+        TableLayout gameGrid = findViewById(R.id.gameGrid);
+        ImageView playButton = findViewById(R.id.playButton);
+        ImageView homeButton = findViewById(R.id.homeButton);
+        ImageView logo = findViewById(R.id.gameLogo);
 
+        gameGrid.animate().alpha(0).setDuration(300);
+        logo.animate().translationYBy(650).rotation(360).scaleX(1).scaleY(1).setDuration(1000).setStartDelay(400);
+        homeButton.animate().setDuration(300).rotation(360).translationXBy(-250).alpha(0).setStartDelay(400);
+        playButton.animate().setDuration(300).rotation(360).translationXBy(250).setStartDelay(400);
+        playButton.setImageResource(R.drawable.playbutton);
+        homeButton.setClickable(false);
+        playRestartFlag=false;
+        resetGame();
+        setTilesInactive();
+    }
 
     public void playButtonAction(){
 
         TableLayout gameGrid = findViewById(R.id.gameGrid);
         ImageView playButton = findViewById(R.id.playButton);
         ImageView homeButton = findViewById(R.id.homeButton);
-
         ImageView logo = findViewById(R.id.gameLogo);
-        logo.animate().rotation(1080).setDuration(1000).translationYBy(-650).scaleY(0.7f).scaleX(0.7f);
-        playButton.animate().setDuration(1000).rotation(-360).translationXBy(-250);
-        playButton.setImageResource(R.drawable.restartbutton);
-        homeButton.animate().setDuration(1000).rotation(360).translationXBy(250).alpha(1);
-        gameGrid.animate().alpha(1).setDuration(1500).setStartDelay(550);
 
+        logo.animate().rotation(1080).setDuration(1000).translationYBy(-650).scaleY(0.7f).scaleX(0.7f);
+        playButton.animate().setDuration(500).rotation(-360).translationXBy(-250);
+        playButton.setImageResource(R.drawable.restartbutton);
+        homeButton.animate().setDuration(500).rotation(360).translationXBy(250).alpha(1);
+        gameGrid.animate().alpha(1).setDuration(1500).setStartDelay(550);
+        homeButton.setClickable(true);
     }
 
     public void resetGame(){
@@ -197,5 +222,6 @@ public class MainActivity extends AppCompatActivity {
         winningLines[8+5] = findViewById(R.id.horizontalLeftLineRed);
         winningLines[8+6] = findViewById(R.id.horizontalMiddleLineRed);
         winningLines[8+7] = findViewById(R.id.horizontalRightLineRed);
+        setTilesInactive();
     }
 }
