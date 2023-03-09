@@ -124,17 +124,17 @@
 
 
     <ImageView
-        android:id="@+id/restartButton"
+        android:id="@+id/playButton"
         android:layout_width="102dp"
         android:layout_height="109dp"
         android:layout_marginTop="10dp"
-        android:alpha="0"
-        android:onClick="resetGame"
+        android:alpha="1"
+        android:onClick="playRestartButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lowerLineBlue"
-        app:srcCompat="@drawable/restartbutton" />
+        app:srcCompat="@drawable/playbutton" />
 
     <ImageView
         android:id="@+id/upperLineBlue"

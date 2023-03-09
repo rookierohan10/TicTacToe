@@ -11,6 +11,8 @@ import android.widget.TableLayout;
 public class MainActivity extends AppCompatActivity {
 
     boolean flag = false;
+    boolean playRestartflag = false;
+    //false: play, true: restart
     char filledPositions[] = new char[9];
     int winningIndex1,winningIndex2,winningIndex3;
     boolean isWinnerDecided;
@@ -121,7 +123,31 @@ public class MainActivity extends AppCompatActivity {
         checkResult();
     }
 
-    public void resetGame(View view){
+    public void playRestartButton(View view){
+        if(playRestartflag == false){
+            playRestartflag=true;
+            playButtonAction();
+        }
+        else{
+            resetGame();
+        }
+    }
+
+    public void playButtonAction(){
+
+        TableLayout gameGrid = findViewById(R.id.gameGrid);
+        ImageView resetButton = findViewById(R.id.playButton);
+        ImageView playButton = findViewById(R.id.playButton);
+
+        ImageView logo = findViewById(R.id.gameLogo);
+        logo.animate().rotation(1080).setDuration(1000).translationYBy(-800).scaleY(0.7f).scaleX(0.7f);
+        playButton.animate().setDuration(1000).rotation(-360).translationXBy(-250);
+        playButton.setImageResource(R.drawable.restartbutton);
+        gameGrid.animate().alpha(1).setDuration(1500).setStartDelay(550);
+
+    }
+
+    public void resetGame(){
         for( int i=0;i<9;i++ ) {
             String buttonName = "boardTile" + (i + 1);
             int id = getResources().getIdentifier(buttonName, "id", getPackageName());
@@ -137,7 +163,10 @@ public class MainActivity extends AppCompatActivity {
             winningLines[i].animate().alpha(0);
         for( int i=0;i<9;i++ ) filledPositions[i] = '_';
         flag = false;
-        isWinnerDecided = true;
+        isWinnerDecided = false;
+        winningIndex1=-1;
+        winningIndex2=-1;
+        winningIndex3=-1;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,15 +176,7 @@ public class MainActivity extends AppCompatActivity {
         winningIndex1 = -1;
         winningIndex2 = -1;
         winningIndex3 = -1;
-        TableLayout gameGrid = findViewById(R.id.gameGrid);
-        ImageView resetButton = findViewById(R.id.restartButton);
-        //gameGrid.animate().alpha(0);
-        //resetButton.animate().alpha(0);
 
-        ImageView logo = findViewById(R.id.gameLogo);
-        logo.animate().rotation(1080).setDuration(1000).translationYBy(-800).scaleY(0.7f).scaleX(0.7f).setStartDelay(2000);
-        gameGrid.animate().alpha(1).setDuration(1500).setStartDelay(2000);
-        resetButton.animate().alpha(1).setDuration(1500).setStartDelay(2000);
         isWinnerDecided = false;
         winningLines[0] = findViewById(R.id.diagonalBlue);
         winningLines[1] = findViewById(R.id.diagonalOppositeBlue);
