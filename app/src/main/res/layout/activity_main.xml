@@ -137,6 +137,19 @@
         app:srcCompat="@drawable/playbutton" />
 
     <ImageView
+        android:id="@+id/homeButton"
+        android:layout_width="102dp"
+        android:layout_height="109dp"
+        android:layout_marginTop="10dp"
+        android:alpha="0"
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lowerLineBlue"
+        app:srcCompat="@drawable/homebutton" />
+
+    <ImageView
         android:id="@+id/upperLineBlue"
         android:layout_width="481dp"
         android:layout_height="150dp"
@@ -383,6 +396,7 @@
         android:id="@+id/gameLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
         android:alpha="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

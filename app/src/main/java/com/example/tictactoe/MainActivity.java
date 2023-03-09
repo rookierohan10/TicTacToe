@@ -11,7 +11,7 @@ import android.widget.TableLayout;
 public class MainActivity extends AppCompatActivity {
 
     boolean flag = false;
-    boolean playRestartflag = false;
+    boolean playRestartFlag = false;
     //false: play, true: restart
     char filledPositions[] = new char[9];
     int winningIndex1,winningIndex2,winningIndex3;
@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playRestartButton(View view){
-        if(playRestartflag == false){
-            playRestartflag=true;
+        if(playRestartFlag == false){
+            playRestartFlag=true;
             playButtonAction();
         }
         else{
@@ -133,16 +133,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     public void playButtonAction(){
 
         TableLayout gameGrid = findViewById(R.id.gameGrid);
-        ImageView resetButton = findViewById(R.id.playButton);
         ImageView playButton = findViewById(R.id.playButton);
+        ImageView homeButton = findViewById(R.id.homeButton);
 
         ImageView logo = findViewById(R.id.gameLogo);
-        logo.animate().rotation(1080).setDuration(1000).translationYBy(-800).scaleY(0.7f).scaleX(0.7f);
+        logo.animate().rotation(1080).setDuration(1000).translationYBy(-650).scaleY(0.7f).scaleX(0.7f);
         playButton.animate().setDuration(1000).rotation(-360).translationXBy(-250);
         playButton.setImageResource(R.drawable.restartbutton);
+        homeButton.animate().setDuration(1000).rotation(360).translationXBy(250).alpha(1);
         gameGrid.animate().alpha(1).setDuration(1500).setStartDelay(550);
 
     }
