@@ -29,7 +29,6 @@
         android:layout_height="109dp"
         android:alpha="1"
         android:contentDescription="@android:string/search_go"
-        android:onClick="playButtonFunction"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

@@ -11,6 +11,7 @@ import android.widget.TableLayout;
 
 public class GamePage extends AppCompatActivity {
 
+
     boolean flag = false;
     boolean playRestartFlag = false;
     //false: play, true: restart
@@ -18,7 +19,7 @@ public class GamePage extends AppCompatActivity {
     int winningIndex1,winningIndex2,winningIndex3;
     boolean isWinnerDecided;
     ImageView winningLines[] = new ImageView[16];
-
+    /*
     public void setTilesInactive(){
         boolean flag=playRestartFlag;
         for( int i=1;i<=9;i++ ){
@@ -27,16 +28,16 @@ public class GamePage extends AppCompatActivity {
             findViewById(id).setClickable(flag);
         }
     }
+    */
 
-
-    public void fillBoard(String move){
-        int moveIndex = (move.charAt(move.length()-1)-1-48);
-        Log.i("position","position: "+ moveIndex);
+    public void fillBoard(int i){
+        int moveIndex = i-1;
         if( flag == false)
             filledPositions[moveIndex] = 'X';
         else filledPositions[moveIndex] = 'O';
     }
 
+    /*
     public void checkResult(){
         char turn = 'X',winner='_';
         int lineNumber = -1;
@@ -108,25 +109,24 @@ public class GamePage extends AppCompatActivity {
         }
 
     }
+
+    */
     public void boardEntry(View view){
 
         ImageView image = (ImageView) view;
         view.setClickable(false);
-        if( flag==false ){
+        if(!flag){
             image.setImageResource(R.drawable.xmark);
-            fillBoard(getResources().getResourceName(view.getId()));
             flag = true;
         }
         else{
             image.setImageResource(R.drawable.omark);
-            fillBoard(getResources().getResourceName(view.getId()));
             flag = false;
         }
-
-
-        checkResult();
+        //checkResult();
     }
 
+    /*
     public void playButtonAction(){
 
         TableLayout gameGrid = findViewById(R.id.gameGrid);
@@ -141,7 +141,7 @@ public class GamePage extends AppCompatActivity {
         gameGrid.animate().alpha(1).setDuration(1500).setStartDelay(550);
         homeButton.setClickable(true);
     }
-
+    */
     public void resetGame(){
         for( int i=0;i<9;i++ ) {
             String buttonName = "boardTile" + (i + 1);
@@ -149,13 +149,18 @@ public class GamePage extends AppCompatActivity {
             ImageView image = findViewById(id);
             image.setImageResource(0);
             image.setClickable(true);
+            /*
             if( i != winningIndex1 && i != winningIndex2 && i != winningIndex3 && isWinnerDecided==true) {
                 image.animate().alpha(0.2F).scaleXBy(0.1F).scaleYBy(0.1F);
             }
             image.animate().alpha(1);
+
+             */
         }
+        /*
         for( int i=0;i<16;i++ )
             winningLines[i].animate().alpha(0);
+         */
         for( int i=0;i<9;i++ ) filledPositions[i] = '_';
         flag = false;
         isWinnerDecided = false;
@@ -168,29 +173,41 @@ public class GamePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_page);
+
         for( int i=0;i<9;i++ ) filledPositions[i] = '_';
         winningIndex1 = -1;
         winningIndex2 = -1;
         winningIndex3 = -1;
-
         isWinnerDecided = false;
 
-        setTilesInactive();
-        winningLines[0] = findViewById(R.id.diagonalBlue3);
-        winningLines[1] = findViewById(R.id.diagonalOppositeBlue3);
-        winningLines[2] = findViewById(R.id.upperLineBlue3);
-        winningLines[3] = findViewById(R.id.middleLineBlue3);
-        winningLines[4] = findViewById(R.id.lowerLineBlue3);
-        winningLines[5] = findViewById(R.id.horizontalLeftLineBlue3);
-        winningLines[6] = findViewById(R.id.horizontalMiddleLineBlue3);
-        winningLines[7] = findViewById(R.id.horizontalRightLineBlue3);
-        winningLines[8+0] = findViewById(R.id.diagonalRed3);
-        winningLines[8+1] = findViewById(R.id.diagonalOppositeRed3);
-        winningLines[8+2] = findViewById(R.id.upperLineRed3);
-        winningLines[8+3] = findViewById(R.id.middleLineRed3);
-        winningLines[8+4] = findViewById(R.id.lowerLineRed3);
-        winningLines[8+5] = findViewById(R.id.horizontalLeftLineRed3);
-        winningLines[8+6] = findViewById(R.id.horizontalMiddleLineRed3);
-        winningLines[8+7] = findViewById(R.id.horizontalRightLineRed3);
+        ImageView boardTile1 = findViewById(R.id.boardTile1);
+        ImageView boardTile2 = findViewById(R.id.boardTile2);
+        ImageView boardTile3 = findViewById(R.id.boardTile3);
+        ImageView boardTile4 = findViewById(R.id.boardTile4);
+        ImageView boardTile5 = findViewById(R.id.boardTile5);
+        ImageView boardTile6 = findViewById(R.id.boardTile6);
+        ImageView boardTile7 = findViewById(R.id.boardTile7);
+        ImageView boardTile8 = findViewById(R.id.boardTile8);
+        ImageView boardTile9 = findViewById(R.id.boardTile9);
+        ImageView homeButton = findViewById(R.id.homeButton);
+        resetGame();
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        boardTile1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setClickable(false);
+                fillBoard(1);
+                ImageView tile = (ImageView) v;
+                if(!flag) tile.setImageResource(R.drawable.xmark);
+                else tile.setImageResource(R.drawable.omark);
+            }
+        });
+        //setTilesInactive();
+
     }
 }
