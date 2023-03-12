@@ -2,6 +2,7 @@ package com.example.tictactoe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,30 +19,50 @@ public class GamePage extends AppCompatActivity {
     char filledPositions[] = new char[9];
     int winningIndex1,winningIndex2,winningIndex3;
     boolean isWinnerDecided;
+    int moveCounter;
     ImageView winningLines[] = new ImageView[16];
-    /*
-    public void setTilesInactive(){
-        boolean flag=playRestartFlag;
-        for( int i=1;i<=9;i++ ){
-            String buttonName = "boardTile"+(i);
-            int id = getResources().getIdentifier(buttonName,"id",getPackageName());
-            findViewById(id).setClickable(flag);
-        }
-    }
-    */
 
-    public void fillBoard(int i){
-        int moveIndex = i-1;
+
+    public void initialize(){
+        moveCounter = 0;
+        for( int i=0;i<9;i++ ) filledPositions[i] = '_';
+        winningIndex1 = -1;
+        winningIndex2 = -1;
+        winningIndex3 = -1;
+        isWinnerDecided = false;
+
+        winningLines[2]=findViewById(R.id.horizontalUpperLineBlue);
+        winningLines[3]=findViewById(R.id.horizontalMiddleLineBlue);
+        winningLines[4]=findViewById(R.id.horizontalLowerLineBlue);
+        winningLines[5]=findViewById(R.id.verticalLeftLineBlue);
+        winningLines[6]=findViewById(R.id.verticalMiddleLineBlue);
+        winningLines[7]=findViewById(R.id.verticalRightLineBlue);
+        winningLines[0]=findViewById(R.id.diagonalLineBlue);
+        winningLines[1]=findViewById(R.id.reverseDiagonalLineBlue);
+
+        for( int i=0;i<8;i++) winningLines[i].animate().alpha(0);
+
+        ImageView drawMessage = findViewById(R.id.drawMessage);
+        drawMessage.animate().alpha(0);
+    }
+
+    public void fillBoard(char ch){
+        int moveIndex = (int)ch - 48-1;
         if( flag == false)
             filledPositions[moveIndex] = 'X';
         else filledPositions[moveIndex] = 'O';
+        String display = "";
+        for( char x: filledPositions)
+            display += x;
+        Log.i("filled positions",display);
     }
 
-    /*
+
     public void checkResult(){
         char turn = 'X',winner='_';
         int lineNumber = -1;
         if(flag) turn='O';
+        ++moveCounter;
 
         winningIndex1 = -1;
         winningIndex2 = -1;
@@ -91,29 +112,32 @@ public class GamePage extends AppCompatActivity {
         if(winner != '_'){
             isWinnerDecided=true;
             String buttonName;
-            Log.i("winning index",winningIndex1+" "+winningIndex2+" "+winningIndex3);
             for( int i=0;i<9;i++ ){
                 buttonName = "boardTile"+(i+1);
                 int id = getResources().getIdentifier(buttonName,"id",getPackageName());
                 ImageView image = findViewById(id);
                 image.setClickable(false);
                 if( i != winningIndex1 && i != winningIndex2 && i != winningIndex3) {
-                    image.animate().alpha(0.2F).scaleXBy(-0.1F).scaleYBy(-0.1F).setDuration(200);
+                    image.animate().alpha(0.2F).setDuration(200);
                 }
-                //Log.i("ids: tile"+i,Integer.toString(id));
             }
-            if(turn == 'X')
-                winningLines[lineNumber].animate().alpha(1);
-            else
-                winningLines[8+lineNumber].animate().alpha(1);
+            winningLines[lineNumber].animate().alpha(1);
         }
-
+        if(winner == '_' && moveCounter==9){
+            String buttonName;
+            findViewById(R.id.gameGrid).animate().alpha(0.2F);
+            ImageView drawMessage = findViewById(R.id.drawMessage);
+            drawMessage.animate().alpha(1).setDuration(250);
+        }
     }
 
-    */
+
     public void boardEntry(View view){
 
         ImageView image = (ImageView) view;
+        String tag = String.valueOf(image.getTag());
+        //Log.i("Tile Number",tag.charAt(tag.length()-1)+" ");
+        fillBoard(tag.charAt(tag.length()-1));
         view.setClickable(false);
         if(!flag){
             image.setImageResource(R.drawable.xmark);
@@ -123,91 +147,62 @@ public class GamePage extends AppCompatActivity {
             image.setImageResource(R.drawable.omark);
             flag = false;
         }
-        //checkResult();
+        checkResult();
     }
 
-    /*
-    public void playButtonAction(){
-
-        TableLayout gameGrid = findViewById(R.id.gameGrid);
-        ImageView playButton = findViewById(R.id.playButton);
-        ImageView homeButton = findViewById(R.id.restartButton);
-        ImageView logo = findViewById(R.id.gameLogo);
-
-        logo.animate().setDuration(1000).translationYBy(-650).scaleY(0.7f).scaleX(0.7f);
-        playButton.animate().setDuration(500).rotation(-360).translationXBy(-250);
-        playButton.setImageResource(R.drawable.restartbutton);
-        homeButton.animate().setDuration(500).rotation(360).translationXBy(250).alpha(1);
-        gameGrid.animate().alpha(1).setDuration(1500).setStartDelay(550);
-        homeButton.setClickable(true);
-    }
-    */
-    public void resetGame(){
-        for( int i=0;i<9;i++ ) {
-            String buttonName = "boardTile" + (i + 1);
-            int id = getResources().getIdentifier(buttonName, "id", getPackageName());
-            ImageView image = findViewById(id);
-            image.setImageResource(0);
-            image.setClickable(true);
-            /*
-            if( i != winningIndex1 && i != winningIndex2 && i != winningIndex3 && isWinnerDecided==true) {
-                image.animate().alpha(0.2F).scaleXBy(0.1F).scaleYBy(0.1F);
-            }
-            image.animate().alpha(1);
-
-             */
-        }
-        /*
-        for( int i=0;i<16;i++ )
-            winningLines[i].animate().alpha(0);
-         */
-        for( int i=0;i<9;i++ ) filledPositions[i] = '_';
-        flag = false;
-        isWinnerDecided = false;
-        winningIndex1=-1;
-        winningIndex2=-1;
-        winningIndex3=-1;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_page);
 
-        for( int i=0;i<9;i++ ) filledPositions[i] = '_';
-        winningIndex1 = -1;
-        winningIndex2 = -1;
-        winningIndex3 = -1;
-        isWinnerDecided = false;
+        initialize();
 
-        ImageView boardTile1 = findViewById(R.id.boardTile1);
-        ImageView boardTile2 = findViewById(R.id.boardTile2);
-        ImageView boardTile3 = findViewById(R.id.boardTile3);
-        ImageView boardTile4 = findViewById(R.id.boardTile4);
-        ImageView boardTile5 = findViewById(R.id.boardTile5);
-        ImageView boardTile6 = findViewById(R.id.boardTile6);
-        ImageView boardTile7 = findViewById(R.id.boardTile7);
-        ImageView boardTile8 = findViewById(R.id.boardTile8);
-        ImageView boardTile9 = findViewById(R.id.boardTile9);
+        for( int i=1;i<=9;i++){
+            String buttonName = "boardTile" + i;
+            int id = getResources().getIdentifier(buttonName, "id", getPackageName());
+            ImageView image = findViewById(id);
+            image.setImageResource(0);
+            image.animate().alpha(1);
+        }
+
         ImageView homeButton = findViewById(R.id.homeButton);
-        resetGame();
+        ImageView resetGame = findViewById(R.id.resetButton);
+
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+                Intent intent = new Intent(GamePage.this,MainActivity.class);
+                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+                startActivity(intent);
             }
         });
-        boardTile1.setOnClickListener(new View.OnClickListener() {
+
+        resetGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setClickable(false);
-                fillBoard(1);
-                ImageView tile = (ImageView) v;
-                if(!flag) tile.setImageResource(R.drawable.xmark);
-                else tile.setImageResource(R.drawable.omark);
+                for( int i=0;i<9;i++ ) {
+                    String buttonName = "boardTile" + (i + 1);
+                    int id = getResources().getIdentifier(buttonName, "id", getPackageName());
+                    ImageView image = findViewById(id);
+                    image.setImageResource(0);
+                    image.setClickable(true);
+                    image.animate().alpha(1);
+                }
+                    for( int i=0;i<8;i++ )
+                        winningLines[i].animate().alpha(0);
+                    for( int i=0;i<9;i++ ) filledPositions[i] = '_';
+                    flag = false;
+                    isWinnerDecided = false;
+                    winningIndex1=-1;
+                    winningIndex2=-1;
+                    winningIndex3=-1;
+                    moveCounter=0;
+                    findViewById(R.id.drawMessage).animate().alpha(0);
+                    findViewById(R.id.gameGrid).animate().alpha(1);
             }
         });
-        //setTilesInactive();
 
     }
 }
